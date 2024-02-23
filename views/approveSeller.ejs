@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Requests</title>
+  </head>
+  <body>
+    <h2>Store Requests</h2>
+    <% if (storeRequests.length === 0) { %>
+    <p>No store requests found.</p>
+    <% } else { %>
+    <ul>
+      <% storeRequests.forEach(request => { %>
+      <li>
+        <strong>User:</strong> <%= request.userId.name %> (<%=
+        request.userId.email %>)<br />
+        <strong>Store Name:</strong> <%= request.name %><br />
+        <strong>Store Type:</strong> <%= request.type %><br />
+        <!-- Add more details as needed -->
+      </li>
+      <% }); %>
+    </ul>
+    <% } %>
+  </body>
+</html>

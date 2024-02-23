@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    h1 {
+      display: flex;
+      justify-content: center;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: 900;
+    }
+    .card_store {
+      margin: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #ccc;
+    }
+    .img_store {
+      width: 120px;
+    }
+    .anchor_tag {
+      text-decoration: none;
+      color: rgb(18, 17, 17);
+    }
+  </style>
+  <body>
+    <%- include('components/navbar',{currentPage:'nearby'}) %>
+    <h1>Nearby Store</h1>
+    <%stores.forEach(store => { %>
+    <a class="anchor_tag" href="/stores/<%= store._id%> ">
+      <div class="card_store">
+        <div>
+          <p><strong><%= store.name%></strong></p>
+
+          <p>Distance: <%= store.distance%> m</p>
+        </div>
+        <div class="type_store">
+          <p><strong> <%= store.type%></strong></p>
+        </div>
+        <div>
+          <img
+            class="img_store"
+            src="/files/<%= store.logo.split('\\').pop() %>"
+          />
+        </div>
+      </div>
+    </a>
+
+    <% }) %>
+  </body>
+</html>

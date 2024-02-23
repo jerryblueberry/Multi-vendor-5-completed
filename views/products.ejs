@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <style>
+      /* Define the grid layout */
+      .product-grid {
+        display: grid;
+        margin: 20px;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(200px, 1fr)
+        ); /* Automatically adjust column width */
+        grid-gap: 20px; /* Gap between grid items */
+        list-style: none; /* Remove default list styles */
+        padding: 0; /* Remove default padding */
+      }
+
+      /* Style each product item */
+      .product-item {
+        border: 1px solid #ccc; /* Add border */
+        padding: 10px; /* Add padding */
+      }
+
+      /* Style product image */
+      .product-image {
+        max-width: 100%;
+
+        /* Ensure images don't exceed container width */
+        height: 120px; /* Maintain aspect ratio */
+      }
+      .anchor_tag {
+        text-decoration: none;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('components/navbar',{currentPage:'products'}) %>
+
+    <ul class="product-grid">
+      <% products.forEach(product => { %> <% if (product.type === "General") {
+      %>
+      <a class="anchor_tag" href="/detail/<%= product._id %>">
+        <li class="product-item">
+          <h2><%= product.title %></h2>
+          <p>Description: <%= product.description %></p>
+          <p>Price: $<%= product.price %></p>
+
+          <img class="product-image" src="<%= product.image[0] %>" />
+        </li>
+      </a>
+      <% } %> <% }); %>
+    </ul>
+    <form action="/" method="GET">
+      <label for="sort">Sort By:</label>
+      <select class="form-control" id="sort" name="sort">
+        <option value="price-high">price|up</option>
+        <option value="price-low">price-low</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary">Sort</button>
+    </form>
+  </body>
+</html>

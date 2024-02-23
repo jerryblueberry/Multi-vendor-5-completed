@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <%- include('components/navbar',{currentPage:'products'}) %>
+
+    <div class="container mt-5">
+      <% if (userCart.products.length === 0) { %>
+      <div class="text-center">
+        <p>Your cart is empty.</p>
+      </div>
+      <% } else { %>
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="list-group">
+            <% userCart.products.forEach(product => { %>
+            <li class="list-group-item">
+              <div class="d-flex align-items-center">
+                <img
+                  src="/<%= product.product.image[0].replace(/\\/g, '/') %>"
+                  class="me-3"
+                  style="max-width: 100px"
+                  alt="<%= product.product.title %>"
+                />
+                <div>
+                  <h5 class="mb-0"><%= product.product.title %></h5>
+                  <p>Description: <%= product.product.description %></p>
+                  <p>Price: $<%= product.price %></p>
+                  <p>Quantity: <%= product.quantity %></p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <button
+                  class="btn btn-outline-primary btn-increment"
+                  data-product-id="<%= product.product._id %>"
+                >
+                  Increment
+                </button>
+                <button
+                  class="btn btn-outline-secondary btn-decrement ms-2"
+                  data-product-id="<%= product.product._id %>"
+                >
+                  Decrement
+                </button>
+                <button
+                  class="btn btn-outline-danger btn-remove ms-2"
+                  data-product-id="<%= product.product._id %>"
+                >
+                  Remove
+                </button>
+              </div>
+            </li>
+            <% }); %>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Total Price</h5>
+              <p class="card-text">Total Price: $<%= userCart.total_price %></p>
+              <button class="btn btn-primary btn-checkout">Checkout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const incrementButtons = document.querySelectorAll('.btn-increment');
+        incrementButtons.forEach((button) => {
+          button.addEventListener('click', async () => {
+            try {
+              const productId = button.dataset.productId;
+              const response = await fetch('/carts/increament', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  product: productId,
+                }),
+              });
+
+              if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(errorMessage);
+              }
+
+              const responseData = await response.json();
+              alert('Product quantity incremented successfully');
+              console.log(responseData);
+              location.reload();
+            } catch (error) {
+              console.error(
+                'Error incrementing product quantity:',
+                error.message
+              );
+              alert(
+                'An error occurred while incrementing product quantity. Please try again.'
+              );
+            }
+          });
+        });
+
+        const decrementButtons = document.querySelectorAll('.btn-decrement');
+        decrementButtons.forEach((button) => {
+          button.addEventListener('click', async () => {
+            try {
+              const productId = button.dataset.productId;
+              const response = await fetch('/carts/decreament', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  product: productId,
+                }),
+              });
+
+              if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(errorMessage);
+              }
+
+              const responseData = await response.json();
+              alert('Product quantity decremented successfully');
+              console.log(responseData);
+              location.reload();
+            } catch (error) {
+              console.error(
+                'Error decrementing product quantity:',
+                error.message
+              );
+              alert(
+                'An error occurred while decrementing product quantity. Please try again.'
+              );
+            }
+          });
+        });
+
+        const removeButtons = document.querySelectorAll('.btn-remove');
+        removeButtons.forEach((button) => {
+          button.addEventListener('click', async () => {
+            try {
+              const productId = button.dataset.productId;
+              const response = await fetch('/carts/remove', {
+                method: 'DELETE',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  product: productId,
+                }),
+              });
+
+              if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(errorMessage);
+              }
+
+              const responseData = await response.json();
+              alert('Product removed from cart successfully');
+              console.log(responseData);
+              location.reload();
+            } catch (error) {
+              console.error('Error removing product from cart:', error.message);
+              alert(
+                'An error occurred while removing product from cart. Please try again.'
+              );
+            }
+          });
+        });
+
+        const checkoutButton = document.querySelector('.btn-checkout');
+        checkoutButton.addEventListener('click', async () => {
+          try {
+            const userId = '<%= userCart.userId%>';
+            const response = await fetch('/orders', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                userId,
+              }),
+            });
+
+            if (!response.ok) {
+              const errorMessage = await response.text();
+              throw new Error(errorMessage);
+            }
+
+            const orderData = await response.json();
+            alert('Checkout successfully!');
+            console.log(orderData);
+          } catch (error) {
+            console.error('Error during checkout:', error.message);
+            alert('An error occurred during checkout. Please try again.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

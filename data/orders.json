@@ -1,0 +1,50 @@
+[
+  {
+    "_id": 770887,
+    "userId": 307967,
+    "products": [
+      {
+        "product": 3463192,
+        "quantity": 1,
+        "price": 1299,
+        "_id": 39961
+      }
+    ],
+    "total_price": 1299,
+    "timestamp": "2/10/2024, 12:12:38 PM"
+  },
+  {
+    "_id": 314076,
+    "userId": 307967,
+    "products": [
+      {
+        "product": 476700,
+        "quantity": 1,
+        "price": 120,
+        "_id": 86931
+      },
+      {
+        "product": 3463192,
+        "quantity": 1,
+        "price": 1299,
+        "_id": 37886
+      }
+    ],
+    "total_price": 1419,
+    "timestamp": "2/10/2024, 12:12:58 PM"
+  },
+  {
+    "_id": 978955,
+    "userId": 307967,
+    "products": [
+      {
+        "product": 3463192,
+        "quantity": 3,
+        "price": 1299,
+        "_id": 56896
+      }
+    ],
+    "total_price": 3897,
+    "timestamp": "2/10/2024, 6:38:33 PM"
+  }
+]

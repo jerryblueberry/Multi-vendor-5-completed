@@ -1,0 +1,40 @@
+[
+  {
+    "id": 307967,
+    "name": "Sajan Koirala",
+    "email": "sajan12@gmail.com",
+    "password": "$2b$10$yDVHuL/vpewPXvclGLEhieCO0XZcbHM.z73J9OpevICGFU3khEOaO",
+    "role": "Admin"
+  },
+  {
+    "id": 983539,
+    "name": "Sanam Koirala",
+    "email": "sanam12@gmail.com",
+    "password": "$2b$10$oOz4VFN1CQnYrnkG1WSje.wu1wrN/C6e3aK/1jLlhUM4LBHQ36rZi",
+    "role": "User"
+  },
+  {
+    "id": 694669,
+    "name": "Coffee Singh",
+    "email": "coffee12@gmail.com",
+    "password": "$2b$10$Zs45kZ8w8THN5oaDdIu7WupHPy4p49bSPHpRhmf1sraWCtoNjfXBi",
+    "role": "User",
+    "profileImage": "files\\users\\1707062741162-220590201-thumbs-up.png"
+  },
+  {
+    "id": 750036,
+    "name": "Rohan Maharjan",
+    "email": "rohan12@gmail.com",
+    "password": "$2b$10$i0VgJuluT7LIjto0UVSWxOUhDXm/xPZE.71GV99L9Al34Q2O0ahau",
+    "role": "User",
+    "profileImage": "files\\1707108872277-449438736-radio.png"
+  },
+  {
+    "id": 446058,
+    "name": "Ram Poudel",
+    "email": "ram12@gmail.com",
+    "password": "$2b$10$0gNeu2Yp4RXXZ1MPY6e2S.yDZBkSpy/J9Mmx90SJ9eVKXLjTQ.OnS",
+    "role": "User",
+    "profileImage": "files\\1707488387050-90956277-10.jpeg"
+  }
+]

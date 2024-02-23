@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Detail</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+        color: #333;
+      }
+      .title_store {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .title_store h4 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .title_store img {
+        width: 80px;
+        height: auto;
+        margin-left: 20px;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .location_store {
+        margin: 20px auto;
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .location_store p {
+        margin: 0;
+        font-size: 16px;
+      }
+      .store-product {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        width: 80%;
+      }
+      .product {
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+      }
+      .product p {
+        margin: 5px 0;
+      }
+      .product-image {
+        width: 100px;
+        height: auto;
+        margin-top: 10px;
+      }
+      .anchor_product {
+        text-decoration: none;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('components/navbar',{currentPage:'products'}) %>
+    <p>Store Id: <%= store._id%></p>
+    <div class="title_store">
+      <h4><%= store.name %></h4>
+      <img src="/files/<%= store.logo.split('\\').pop() %>" alt="Store Logo" />
+    </div>
+
+    <a href="/stores/add/products/<%= store._id%>">Add Product</a>
+
+    <div class="location_store">
+      <p><strong>Location:</strong> <%= store.location.coordinates %></p>
+      <p>
+        <strong>Contact:</strong> Later add the contact field in the model with
+        social media links
+      </p>
+    </div>
+
+    <div class="store-product">
+      <h4>Products From Store</h4>
+      <% products.forEach(product => { %>
+      <a class="anchor_product" href="/detail/<%= product._id%>">
+        <div class="product">
+          <p><strong>Title:</strong> <%= product.title %></p>
+          <p><strong>Description:</strong> <%= product.description %></p>
+          <p><strong>Price:</strong> $<%= product.price %></p>
+          <p><strong>Rating:</strong> <%= product.rating %></p>
+          <p><strong>Quantity:</strong> <%= product.quantity %></p>
+          <% if (product.image && product.image.length > 0) { %>
+          <img
+            class="product-image"
+            src="/files/<%= product.image[0].split('\\').pop() %>"
+            alt="<%= product.title %>"
+          />
+          <% } %>
+        </div>
+      </a>
+
+      <% }) %>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order History</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+
+      .navbar {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        padding: 20px;
+      }
+
+      h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      p {
+        margin: 5px 0;
+        color: #666;
+      }
+
+      .product-image {
+        width: 150px;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      .bottom_bellow {
+        border-bottom: 2px solid red;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <h1>Order History</h1>
+    </div>
+    <% purchases.forEach(order => { %>
+    <ul>
+      <% order.products.forEach(product => { %>
+      <li>
+        <h2><%= product.product.title %></h2>
+        <p>Description: <%= product.product.description %></p>
+        <p>Price: $<%= product.product.price %></p>
+        <p>Quantity: <%= product.quantity %></p>
+
+        <% if(product.product.type === "Bidding") { %>
+        <strong>Auctioned Yaa!!</strong>
+        <% } %>
+
+        <div>
+          <% product.product.image.forEach(imageUrl => { %>
+          <img
+            class="product-image"
+            src="/<%= imageUrl.replace(/\\/g, '/') %>"
+            alt="<%= product.product.title %>"
+          />
+          <% }); %>
+        </div>
+      </li>
+      <% }); %>
+    </ul>
+    <p>Total Price: $<%= order.total_price %></p>
+    <p class="bottom_bellow">Time: <%= order.timestamp %></p>
+    <% }); %>
+  </body>
+</html>

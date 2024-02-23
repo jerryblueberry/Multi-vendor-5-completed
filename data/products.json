@@ -1,0 +1,28 @@
+[
+  {
+    "_id": 3463192,
+    "title": "Samsung Tv",
+    "price": "1299",
+    "description": "55 inch Samsung Curved TV. Dolby Atmos Surround  sound system",
+    "quantity": "11",
+    "category": "Electronics",
+    "rating": "4",
+    "image": [
+      "files\\1707489171657-236555567-th (2).jpeg",
+      "files\\1707489171658-327771855-Smart-Samsung-TV-PNG.png"
+    ]
+  },
+  {
+    "_id": 476700,
+    "title": "Laptop Bag ",
+    "price": "120",
+    "description": "!5 inch laptop bag.",
+    "quantity": "3",
+    "category": "Fashion",
+    "rating": "4",
+    "image": [
+      "files\\1707495567897-957955427-bag.jpg",
+      "files\\1707489171658-327771855-Smart-Samsung-TV-PNG.png"
+    ]
+  }
+]

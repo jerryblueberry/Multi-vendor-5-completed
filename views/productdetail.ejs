@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Detail</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #product-details {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: row;
+      }
+
+      .product-image-container {
+        flex: 1;
+        margin-right: 20px;
+      }
+
+      .product-details-container {
+        flex: 2;
+      }
+
+      .product-image {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        margin-top: 0;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+
+      .btn_cart {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn_cart:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('components/navbar',{currentPage:'products'}) %>
+
+    <div id="product-details">
+      <div class="product-image-container">
+        <% if (product.image && product.image.length > 0) { %>
+        <img
+          class="product-image"
+          src="/files/<%= product.image[0].split('\\').pop() %>"
+          alt="<%= product.title %>"
+        />
+        <% } %>
+      </div>
+      <div class="product-details-container">
+        <h2><%= product.title %></h2>
+
+        <p>Description: <%= product.description %></p>
+        <p>Rating: <%= product.rating %></p>
+        <p>Category: <%= product.category %></p>
+        <p>Quantity: <%= product.quantity %></p>
+        <p>Price: $<%= product.price %></p>
+        <p>Store Detail</p>
+        <a href="/stores/<%= product.store._id%>">
+          <p>Posted By: <b><%= product.store.name%></b></p>
+        </a>
+
+        <button id="cart_button" class="btn_cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Your JavaScript code here -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const addToCartButton = document.querySelector('.btn_cart');
+        addToCartButton.addEventListener('click', async () => {
+          try {
+            const productId = '<%= product._id %>'; // parse int might be added for the fs
+            const userId = '<%= userId %>';
+            const price = '<%= product.price %>';
+            const quantity = 1; // Set the quantity to 1 or adjust as needed
+
+            const response = await fetch('/carts/add-cart', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                product: productId,
+                quantity: quantity, // Include the quantity in the request body
+                price: price,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error('Error adding product to cart');
+            }
+
+            const cartData = await response.json();
+            alert('Product added to cart successfully!');
+            console.log(cartData); // Log the cart data to the console (optional)
+          } catch (error) {
+            console.error('Error adding product to cart:', error.message);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

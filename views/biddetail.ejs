@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bid Detail</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+      }
+
+      .image {
+        flex: 1;
+        margin-right: 20px;
+      }
+      .image img {
+        height: 200px;
+      }
+
+      .content {
+        flex: 2;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+      }
+
+      .content h1,
+      .content h2 {
+        color: #333;
+      }
+
+      .content p {
+        color: #666;
+      }
+
+      .content img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      .content form {
+        margin-top: 20px;
+      }
+
+      .content input[type='number'] {
+        width: 150px;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .content button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .content button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="image">
+        <img
+          src="/files/<%= product.image[0].split('\\').pop() %>"
+          alt="Product Image"
+        />
+      </div>
+      <div class="content">
+        <p>Remaining Time: <%= product.remainingTime %></p>
+        <h2><%= product.title %></h2>
+        <p>Description: <%= product.description %></p>
+        <p>Initial Price: $<%= product.price %></p>
+        <!-- <p>Rating: <%= product.rating %></p> -->
+        <p>Product Type: <%= product.type %></p>
+
+        <p>Quantity: <%= product.quantity %></p>
+
+        <p>Highest Bid: $<%= product.highestBid %></p>
+        <p>Highest Bidder : <%= product.highestBidder %></p>
+
+        <% if(product.price === product.highestBid) { %>
+
+        <p>Be First Bidder</p>
+
+        <% } %>
+
+        <h2>Place your bid</h2>
+        <form action="/bid/add/<%= product._id%>" method="post">
+          <input type="number" placeholder="Bid Amount" name="amount" />
+          <button type="submit">Place Bid</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
